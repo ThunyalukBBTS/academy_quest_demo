@@ -1,10 +1,10 @@
 <%= turbo_frame_tag dom_id(quest) do %>
   <div class="flex items-center justify-between mb-[0.75rem]" >
-  <div class="text-white <%= quest.is_done ? "line-through" : "" %>"><%= quest.name %></div>
+  <div class="text-white text-lg <%= quest.is_done ? "line-through" : "" %>"><%= quest.name %></div>
   <div class="flex items-center">
   <%= form_with model: quest, method: :patch do |f| %>
  <%= f.check_box :is_done,
-    checked: quest.is_done, data: { controller: "checkbox", action: "change->checkbox#submit" }
+    checked: quest.is_done, class: "cursor-pointer mt-1.5 mr-2 w-5 h-5", data: { controller: "checkbox", action: "change->checkbox#submit" }
 %>
   <% end %>
   <%= link_to quest_path(quest), data: { turbo_method: :delete }, class: "text-red-500" do %>
