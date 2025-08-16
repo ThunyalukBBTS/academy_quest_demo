@@ -6,7 +6,8 @@
 
 -   New rails project with postgresql and tailwind: `rails new acade --database=postgresql --css=tailwind`
 -   Go to `config/database.yml` then use template
-    > [!NOTE] Please change `<database_name>` with your custom name
+>[!NOTE]
+>Please change `<database_name>` with your custom name
 
 ```yml
 default: &default
@@ -282,5 +283,57 @@ end
     ```
 ## CI/CD
 - Update `.github/workflows/ci.yml` with my custom GitHub actions template (use rspec to run test instead of minitest)
->[!WARNING] Should run lint before push and run CI using `bundle exec rubocop -a`
+>[!WARNING]
+>Should run lint before push and run CI using `bundle exec rubocop -a`
 - Push code to GitHub repository then see the pipeline run in tab **Actions**
+## Deployment
+- Try to deploy on local machine docker. Add the app service to services of `docker-compose.yml`
+  ```yaml
+  app: 
+      build: .
+      container_name: academy-quest-boss-lepan-app
+      command: bundle exec rails s
+      environment:
+        SECRET_KEY_BASE: ${SECRET_KEY_BASE}
+        DATABASE_URL: ${DATABASE_URL_PRODUCTION}
+      volumes:
+        - .:/app
+      ports:
+        - 3000:3000 
+  ```
+  Then update `.env` file with
+  ```env
+  DATABASE_URL=postgres://xxx:yyy@localhost/zzz
+  DATABASE_URL_PRODUCTION=postgres://xxx:yyy@db/zzz
+  # change ip from local host to db          ^^
+  ```
+### Create Render database
+- Go to [Render](https://render.com/) > Dashboard > login with your account > click `+ Add new` button > Postgres
+- Edit `Name`, `Database`, `User` with your custom name
+- For the best database latency should select `Region` to `Singapore (Southeast Asia)`  
+>[!WARNING]
+>**Plan Options** should select `free`
+- Click `Create Database`
+- Then can use `External Database URL` in local machine to render database
+- Can use `Internal Database URL` in render container variables when you deployed app inside render 
+### Create Supabase database
+- Go to [Supabase](https://supabase.com) sign in
+- Create organization
+- **Copy the password** then save it
+- Click connect button > Session pooler > Copy url that start with `postgresql://` to `.env` then replace `[YOUR-PASSWORD]` with password 
+- Then can use the supabase database with `DATABASE_URL`
+### Deploy web service on Render
+>[!NOTE]
+>Your code should be in the GitHub repository and the repository should be public 
+- Go to [Render](https://render.com/) > Dashboard > login with your account > click `+ Add new` button > `Web Service`
+- Source Code: Click `Public Git Repository` then copy url or the repository to repository url and naming the service
+- Select `Region` to `Singapore (Southeast Asia)`
+>[!WARNING]
+>**Plan Options** should select `free`
+- In the `Environment Variables` copy the variable name and value to render
+  - `WEB_CONCURRENCY` use default render value
+  - `RAILS_MASTER_KEY` the value is in the `config/master.key` file
+  - `SECRET_KEY_BASE` the value is in the `config/credentials.yml.enc` file
+  - `DATABASE_URL` from `Render` or `Supabase`
+- Click `Deploy Web Service` and wait until render deploy success then you can access your project with public url like `https://test.onrender.com/`
+- (Optional) For the best practice that we should deploy only the best code quality. we should setting render to re-deploy only the GitHub actions CI run passed only. Go to the render web service project > settings > `Auto-Deploy` change to `After CI Checks Pass`
