@@ -23,3 +23,7 @@ db-reset:
 .PHONY: test
 test:
 	DATABASE_URL=${DATABASE_URL} bundle exec rspec
+
+.PHONY: lint
+lint:
+	bundle exec rubocop -a

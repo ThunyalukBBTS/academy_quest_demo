@@ -7,7 +7,7 @@ describe QuestsController, type: :controller do
   describe "GET #index" do
     it "assigns all quests to @quests and initializes a new quest" do
       get :index
-      expect(assigns(:quests)).to eq([quest])
+      expect(assigns(:quests)).to eq([ quest ])
       expect(assigns(:quest)).to be_a_new(Quest)
       expect(response).to have_http_status(:ok)
     end
