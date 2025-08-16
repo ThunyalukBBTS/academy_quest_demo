@@ -337,3 +337,6 @@ end
   - `DATABASE_URL` from `Render` or `Supabase`
 - Click `Deploy Web Service` and wait until render deploy success then you can access your project with public url like `https://test.onrender.com/`
 - (Optional) For the best practice that we should deploy only the best code quality. we should setting render to re-deploy only the GitHub actions CI run passed only. Go to the render web service project > settings > `Auto-Deploy` change to `After CI Checks Pass`
+### Autimate trigger deploy
+- Go to Render web service project > settings > Copy `Deploy Hook` url
+- Go to GitHub repository > Settings > Secrets and variables > Actions > In section `Repository secrets` > Click `New repository secret` > name `RENDER_DEPLOY_HOOK` and paste the `Deploy Hook` url in value
