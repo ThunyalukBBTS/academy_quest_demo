@@ -206,3 +206,16 @@ Rails.application.routes.draw do
   root "quests#index"
 end
 ```
+## Test
+- Install **Rspec**: go to `Gemfile` in the section `group :test` add `gem "rspec-rails"` like 
+```Gemfile
+group :test do
+  gem "rspec-rails"
+  gem "capybara"
+  gem "selenium-webdriver"
+end
+```
+- Run command to install rspec
+```bash
+bundle exec rails generate rspec:install  
+```
