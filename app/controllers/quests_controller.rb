@@ -7,19 +7,6 @@ class QuestsController < ApplicationController
     @quest = Quest.new
   end
 
-  # GET /quests/1 or /quests/1.json
-  def show
-  end
-
-  # GET /quests/new
-  def new
-    @quest = Quest.new
-  end
-
-  # GET /quests/1/edit
-  def edit
-  end
-
   # POST /quests or /quests.json
   def create
     @quest = Quest.new(quest_params)
