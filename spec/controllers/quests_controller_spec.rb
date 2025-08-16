@@ -1,5 +1,8 @@
 describe QuestsController, type: :controller do
-  let!(:quest) { Quest.create(name: "Test Quest", is_done: false) }
+    before do
+        Quest.destroy_all
+    end
+    let!(:quest) { Quest.create(name: "Test Quest", is_done: false) }
 
   describe "GET #index" do
     it "assigns all quests to @quests and initializes a new quest" do
