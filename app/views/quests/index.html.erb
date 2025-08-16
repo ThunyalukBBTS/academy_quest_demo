@@ -1,20 +1,20 @@
 <div class="px-[2rem] md:h-full">
   <div class="md:grid md:grid-cols-2 md:h-full">
-    <div class="md:col-span-1 md:h-full">
-      <div class="text-white text-4xl"><b>Bigboss</b> | Thunyaluk Sasiwarinkul</div>
-      <div class="text-xl text-[#00abf0]">Academy quests</div>
+    <div class="md:col-span-1 md:h-full md:justify-center text-center md:text-start">
+      <div class="text-white text-4xl"><b>Boss</b> | Thunyaluk Sasiwarinkul</div>
+      <div class="text-3xl text-[#00abf0]">Academy quests</div>
       <div class="my-5">
-      <%= link_to "My brag document", root_path, class:"btn bg-[#00abf0] text-white p-2 font-bold rounded-md" %>
+        <%= link_to "My brag document", brag_path, class:"btn bg-blue-600 text-white p-2 font-bold rounded-md" %>
       </div>
-      <%= image_tag "GDSC Profile.jpg", class: "my-5 rounded-md w-[200px] md:w-[300px]" %>
+      <%= image_tag "GDSC Profile.jpg", class: "my-5 rounded-md w-[200px] md:w-[300px] mx-auto md:mx-0" %>
     </div>
     <div class="md:col-span-1 overflow-auto">
-    <%= turbo_frame_tag "new_quest_form" do %>
-      <%= render "form", quest: @quest %>
-    <% end %>
-    <%= turbo_frame_tag "quests" do %>
-      <%= render partial: "quest", collection: @quests, as: :quest %>
-    <% end %>
+      <%= turbo_frame_tag "new_quest_form" do %>
+        <%= render "form", quest: @quest %>
+      <% end %>
+      <%= turbo_frame_tag "quests" do %>
+        <%= render partial: "quest", collection: @quests, as: :quest %>
+      <% end %>
     </div>
   </div>
 </div>
