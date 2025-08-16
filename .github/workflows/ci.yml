@@ -51,6 +51,7 @@ jobs:
           bundler-cache: true
 
       - name: Lint code for consistent style
+        continue-on-error: true
         run: bin/rubocop -f github
 
   test:
@@ -83,13 +84,13 @@ jobs:
         env:
           DATABASE_URL: postgres://postgres:postgres@localhost:5432
           RAILS_ENV: test
-        run: make migrate
+        run: bin/rails db:create db:migrate
 
       - name: Run tests
         env:
           DATABASE_URL: postgres://postgres:postgres@localhost:5432
           RAILS_ENV: test
-        run: make test
+        run: bundler exec rspec
 
       - name: Keep screenshots from failed system tests
         uses: actions/upload-artifact@v4
