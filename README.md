@@ -6,7 +6,7 @@
 
 -   New rails project with postgresql and tailwind: `rails new acade --database=postgresql --css=tailwind`
 -   Go to `config/database.yml` then use template
->[!NOTE] Please change `<database_name>` with your custom name
+    > [!NOTE] Please change `<database_name>` with your custom name
 
 ```yml
 default: &default
@@ -206,8 +206,11 @@ Rails.application.routes.draw do
   root "quests#index"
 end
 ```
-## Test
-- Install **Rspec**: go to `Gemfile` in the section `group :test` add `gem "rspec-rails"` like 
+
+## Testing
+
+-   Install **Rspec**: go to `Gemfile` in the section `group :test` add `gem "rspec-rails"` like
+
 ```Gemfile
 group :test do
   gem "rspec-rails"
@@ -215,11 +218,15 @@ group :test do
   gem "selenium-webdriver"
 end
 ```
-- Run command to install rspec
+
+-   Run command to install rspec
+
 ```bash
-bundle exec rails generate rspec:install  
+bundle exec rails generate rspec:install
 ```
-- Config `spec/rails_helper.rb`
+
+-   Config `spec/rails_helper.rb`
+
 ```rb
 require 'spec_helper'
 ENV['RAILS_ENV'] ||= 'test'
@@ -251,3 +258,29 @@ RSpec.configure do |config|
   # Filter lines from Rails gems in backtraces.
   config.filter_rails_from_backtrace!
 end
+```
+
+-   Update `.rspec` to required rails_helper by default (you don't need to add `require 'rails_helper'` on the first line of the test file)
+
+```
+--require spec_helper
+--require rails_helper
+```
+
+-   Write your **model, controller and E2E tests** (you can see the example of tests in `/spec`)
+-   Run all your tests
+    ```bash
+    bundle exec rspec
+    ```
+    if the terminal shows database connection error you might try to source DATABASE_URL in the terminal before run test like
+    ```bash
+    DATABASE_URL=xxxxxx bundle exec rspec
+    ```
+    if active record error try
+    ```bash
+    bin/rails db:environment:set RAILS_ENV=test
+    ```
+## CI/CD
+- Update `.github/workflows/ci.yml` with my custom GitHub actions template (use rspec to run test instead of minitest)
+>[!WARNING] Should run lint before push and run CI using `bundle exec rubocop -a`
+- Push code to GitHub repository then see the pipeline run in tab **Actions**
